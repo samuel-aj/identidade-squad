@@ -1,0 +1,639 @@
+@import url('«FONTES_URL»');
+/* «SIGLA» — componentes. Só tokens; nenhum valor de cor solto. Marca plana: sem vidro, sem gradiente em superfície. */
+.aj { font-family: «PILHA_TEXTO»; color: var(--texto); background: var(--fundo); -webkit-font-smoothing: antialiased; }
+.aj *, .aj *::before, .aj *::after { box-sizing: border-box; }
+.aj :focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; }
+
+/* Título de página: o peso e a ênfase em <b> vêm do tipo da marca */
+.aj-titulo { font-family: «PILHA_TITULO»; font-weight: 300; letter-spacing: -0.03em; font-size: 36px; line-height: 42px; margin: 0; color: var(--texto); text-wrap: balance; }
+.aj-titulo b, .aj-titulo strong { font-weight: 600; }
+.aj-titulo--display { font-size: 56px; line-height: 60px; letter-spacing: -0.035em; }
+.aj-titulo--secao { font-size: 26px; line-height: 32px; letter-spacing: -0.025em; }
+.aj-subtitulo { font-size: 16px; line-height: 24px; color: var(--texto-2); margin: 0; max-width: 62ch; }
+/* @se caixa-alta */
+.aj-rotulo { font: 500 12px/16px «PILHA_TITULO»; letter-spacing: 0.08em; text-transform: uppercase; color: var(--texto-2); }
+/* @senao */
+/* Rótulo sem caixa alta (marca.json "rotulo": {"caixa": "baixa"}): o estilo `rotulo` do tipo, como a marca o escreve */
+.aj-rotulo { font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-2); }
+/* @fim */
+
+/* @se simbolo */
+/* Símbolo: pintado pelo token simbolo */
+.aj-simbolo { display: block; fill: var(--simbolo); }
+/* @fim */
+/* @se luz */
+.aj-brilho { filter: drop-shadow(0 0 1px rgba(255,255,255,0.25)) drop-shadow(0 0 14px var(--brilho)) drop-shadow(0 0 36px rgba(«RGB_PRIMARIA»,0.35)); }
+.aj-halo { position: relative; isolation: isolate; overflow: hidden; }
+.aj-halo::before { content: ""; position: absolute; inset: -25%; z-index: -1; pointer-events: none;
+  background: radial-gradient(38% 42% at 72% 30%, var(--halo-1), rgba(0,0,0,0) 70%), radial-gradient(34% 38% at 24% 86%, var(--halo-2), rgba(0,0,0,0) 70%); filter: blur(14px); }
+.aj-halo--respira::before { animation: aj-respira 7s var(--curva-marca) infinite; }
+/* O halo nunca termina em corte reto: some antes do fim do contêiner */
+.aj-halo::before { -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 78%); mask-image: linear-gradient(to bottom, #000 45%, transparent 78%); }
+@media print {
+  .aj-halo { overflow: visible; }
+  .aj-halo::before { inset: 0 0 -40% 0; background: radial-gradient(50% 45% at 80% 18%, var(--halo-1), rgba(0,0,0,0) 72%); filter: none; -webkit-mask-image: none; mask-image: none; }
+}
+@keyframes aj-respira { 50% { opacity: .6; transform: scale(1.05); } }
+/* @fim */
+/* @se linhas */
+/* Assinatura (símbolo + nome em linhas, identidade/logo/assinatura/): o símbolo e a 1ª linha com o token `simbolo`, as
+   seguintes com `texto-2`. Altura pela classe; a largura sai da proporção do arquivo. Nunca abaixo do mínimo de medidas.json. */
+.aj-assinatura { display: block; flex: none; width: auto; height: 32px; fill: var(--simbolo); }
+.aj-assinatura .aj-assinatura__linha ~ .aj-assinatura__linha { fill: var(--texto-2); }
+/* @fim */
+/* @se tipografica */
+/* Logotipo (marca só tipográfica): o nome em curvas, de identidade/logo/assinatura/. Em linha, nunca abaixo de «LOGOTIPO_MIN» de largura. */
+.aj-logotipo { display: block; flex: none; width: auto; height: «LOGOTIPO_ALTURA»; fill: var(--logotipo); }
+.aj-logotipo--empilhado { height: auto; width: 120px; }
+/* @fim */
+
+/* Botão */
+.aj-botao { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: var(--raio-md);
+  font: 600 14px/20px «PILHA_TEXTO»; border: 1px solid transparent; cursor: pointer; white-space: nowrap; text-decoration: none;
+  transition: background-color var(--tempo-rapido) var(--curva-marca), color var(--tempo-rapido) var(--curva-marca), border-color var(--tempo-rapido) var(--curva-marca); }
+.aj-botao--principal { background: var(--acao); color: var(--sobre-acao); }
+.aj-botao--principal:hover { background: var(--acao-hover); }
+.aj-botao--secundario { background: var(--realce); color: var(--sobre-realce); }
+.aj-botao--secundario:hover { background: var(--superficie-2); }
+.aj-botao--contorno { background: var(--superficie); color: var(--texto); border-color: var(--borda-controle); }
+.aj-botao--contorno:hover { background: var(--superficie-2); }
+.aj-botao--fantasma { background: transparent; color: var(--texto-2); }
+.aj-botao--fantasma:hover { background: var(--superficie-2); color: var(--texto); }
+.aj-botao--perigo { background: var(--critico); color: var(--sobre-acao); }
+[data-theme="escuro"] .aj-botao--perigo, .aj-botao--perigo[data-theme="escuro"] { color: var(--fundo); }
+.aj-botao--sm { height: 32px; padding: 0 12px; font-size: 13px; }
+.aj-botao--lg { height: 48px; padding: 0 22px; font-size: 15px; border-radius: 14px; }
+.aj-botao:disabled, .aj-botao[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.aj-botao svg { width: 16px; height: 16px; flex: none; }
+
+/* Campo */
+/* align-content: start — numa grade de campos, o campo sem ajuda não estica a distância entre rótulo e controle;
+   > label:not([class]) — o rótulo do campo é o filho direto sem classe: uma caixa de marcar dentro do campo ("Não sei ao certo") mantém a letra dela */
+.aj-campo { display: grid; gap: 6px; align-content: start; }
+.aj-campo > label:not([class]) { font: 600 13px/18px «PILHA_TEXTO»; color: var(--texto); }
+.aj-entrada { height: 40px; width: 100%; padding: 0 12px; border-radius: var(--raio-md); border: 1px solid var(--borda-controle); background: var(--superficie);
+  color: var(--texto); font: 400 14px/20px «PILHA_TEXTO»; transition: border-color var(--tempo-rapido) var(--curva-marca); }
+.aj-entrada::placeholder { color: var(--texto-3); }
+.aj-entrada:hover { border-color: var(--texto-2); }
+.aj-entrada:focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; border-color: var(--acao); }
+select.aj-entrada { appearance: none; padding-right: 36px; background-image: linear-gradient(45deg, rgba(0,0,0,0) 50%, var(--texto-2) 50%), linear-gradient(135deg, var(--texto-2) 50%, rgba(0,0,0,0) 50%);
+  background-position: calc(100% - 18px) 18px, calc(100% - 13px) 18px; background-size: 5px 5px; background-repeat: no-repeat; }
+textarea.aj-entrada { height: auto; min-height: 88px; padding: 10px 12px; resize: vertical; }
+.aj-ajuda { font: 500 12px/16px «PILHA_TEXTO»; color: var(--texto-3); }
+.aj-campo--erro .aj-entrada { border-color: var(--critico); background: var(--critico-fundo); }
+.aj-campo--erro .aj-ajuda { color: var(--critico); }
+
+/* Cartão */
+.aj-cartao { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-lg); box-shadow: var(--sombra-1); padding: 24px; }
+.aj-cartao__titulo { font: 500 18px/24px «PILHA_TITULO»; letter-spacing: -0.015em; margin: 0; }
+
+/* Indicador (número) */
+.aj-indicador { display: grid; gap: 6px; }
+.aj-indicador__valor { font: 400 32px/36px «PILHA_TITULO»; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--texto); }
+.aj-indicador__variacao { font: 600 12px/16px «PILHA_TEXTO»; font-variant-numeric: tabular-nums; }
+.aj-indicador__variacao--sobe { color: var(--sucesso); } .aj-indicador__variacao--desce { color: var(--critico); }
+
+/* Etiqueta de status: sempre ponto + palavra */
+.aj-etiqueta { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px 0 8px; border-radius: var(--raio-sm);
+  font: 600 12px/16px «PILHA_TEXTO»; background: var(--superficie-2); color: var(--texto-2); white-space: nowrap; }
+.aj-etiqueta::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.aj-etiqueta--sucesso { background: var(--sucesso-fundo); color: var(--sucesso); }
+.aj-etiqueta--atencao { background: var(--atencao-fundo); color: var(--atencao); }
+.aj-etiqueta--critico { background: var(--critico-fundo); color: var(--critico); }
+.aj-etiqueta--marca { background: var(--realce); color: var(--sobre-realce); }
+
+/* Tabela */
+.aj-tabela-caixa { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-lg); overflow-x: auto; }
+.aj-tabela { width: 100%; border-collapse: collapse; font: 400 14px/20px «PILHA_TEXTO»; }
+/* @se caixa-alta */
+.aj-tabela th { text-align: left; font: 500 12px/16px «PILHA_TITULO»; letter-spacing: 0.06em; text-transform: uppercase; color: var(--texto-2);
+  background: var(--superficie-2); padding: 12px 16px; white-space: nowrap; }
+/* @senao */
+.aj-tabela th { text-align: left; font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-2);
+  background: var(--superficie-2); padding: 12px 16px; white-space: nowrap; }
+/* @fim */
+.aj-tabela td { padding: 14px 16px; border-top: 1px solid var(--linha); color: var(--texto); vertical-align: middle; }
+.aj-tabela tbody tr { transition: background-color var(--tempo-rapido) var(--curva-marca); }
+.aj-tabela tbody tr:hover { background: var(--superficie-2); }
+.aj-tabela .num { text-align: right; font-variant-numeric: tabular-nums; }
+.aj-tabela .fraco { color: var(--texto-2); }
+
+/* Aviso (toast) */
+.aj-aviso { display: flex; gap: 12px; align-items: flex-start; width: min(380px, 100%); padding: 14px 16px; border-radius: var(--raio-lg);
+  background: var(--superficie); border: 1px solid var(--linha); box-shadow: var(--sombra-2); }
+.aj-aviso__icone { flex: none; width: 20px; height: 20px; margin-top: 1px; }
+.aj-aviso__titulo { font: 600 14px/20px «PILHA_TEXTO»; margin: 0; color: var(--texto); }
+.aj-aviso__texto { font: 400 13px/18px «PILHA_TEXTO»; margin: 2px 0 0; color: var(--texto-2); }
+.aj-aviso--sucesso .aj-aviso__icone { color: var(--sucesso); } .aj-aviso--critico .aj-aviso__icone { color: var(--critico); } .aj-aviso--marca .aj-aviso__icone { color: var(--acao); }
+
+/* @se luz simbolo */
+/* Estado vazio: halo + símbolo + frase + uma ação */
+/* @senao */
+/* Estado vazio: frase + uma ação */
+/* @fim */
+.aj-vazio { display: grid; justify-items: center; text-align: center; gap: 14px; padding: 48px 24px; border-radius: var(--raio-lg); border: 1px dashed var(--linha); }
+/* @se simbolo */
+.aj-vazio .aj-simbolo { width: 44px; height: 44px; }
+/* @fim */
+.aj-vazio__titulo { font: 300 22px/28px «PILHA_TITULO»; letter-spacing: -0.025em; margin: 0; }
+.aj-vazio__titulo b { font-weight: 600; }
+.aj-vazio__texto { font: 400 14px/20px «PILHA_TEXTO»; color: var(--texto-2); margin: 0; max-width: 42ch; }
+/* @se simbolo */
+
+/* Carregando: as peças do símbolo chegam e se encaixam */
+.aj-carregando { width: 48px; height: 48px; overflow: visible; }
+.aj-carregando path { --dx: 0px; --dy: 0px; fill: var(--simbolo); animation: aj-encaixe 1.6s var(--curva-marca) infinite; }
+.aj-carregando path:first-child { --dx: -9px; --dy: -9px; } .aj-carregando path:last-child { --dx: 9px; --dy: 9px; }
+@keyframes aj-encaixe { 0% { transform: translate(var(--dx), var(--dy)); opacity: 0; } 15% { opacity: 1; } 55%, 85% { transform: none; opacity: 1; } 100% { transform: none; opacity: 0; } }
+/* @fim */
+/* @se tipografica */
+
+/* Carregando: o movimento-assinatura do nome. Cada trecho do logotipo chega como no vídeo de abertura (logo.trechos[].entrada):
+   desliza de --dx/--dy e/ou sai dos eixos --dfv para os eixos --fv da fonte variável. É o único lugar com o nome em texto vivo,
+   porque o movimento é o eixo da fonte; parado, coincide com o logotipo. */
+.aj-carregando { display: inline-block; white-space: nowrap; font: 600 28px/1.2 «PILHA_TITULO»; color: var(--logotipo); }
+.aj-carregando > span { display: inline-block; font-variation-settings: var(--fv); animation: aj-trecho calc(var(--tempo-assinatura) * 2) var(--curva-marca) infinite both; }
+@keyframes aj-trecho { 0% { opacity: 0; transform: translate(var(--dx), var(--dy)); font-variation-settings: var(--dfv); } 12% { opacity: 1; } 20% { transform: translate(var(--dx), var(--dy)); font-variation-settings: var(--dfv); } 55%, 88% { opacity: 1; transform: none; font-variation-settings: var(--fv); } 100% { opacity: 0; transform: none; font-variation-settings: var(--fv); } }
+/* @fim */
+
+/* Navegação lateral */
+.aj-nav { display: flex; flex-direction: column; gap: 4px; width: 248px; padding: 16px 12px; background: var(--superficie); border-right: 1px solid var(--linha); }
+.aj-nav__marca { display: flex; align-items: center; gap: 10px; padding: 6px 10px 18px; font: 600 15px/20px «PILHA_TITULO»; letter-spacing: -0.02em; color: var(--texto); }
+/* @se simbolo */
+.aj-nav__marca .aj-simbolo { width: 26px; height: 26px; }
+/* @fim */
+/* @se tipografica */
+.aj-nav__marca--logotipo { flex-direction: column; align-items: flex-start; gap: 8px; }
+/* @se caixa-alta */
+.aj-nav__marca--logotipo span { font: 600 11px/16px «PILHA_TITULO»; letter-spacing: 0.08em; text-transform: uppercase; color: var(--texto-3); }
+/* @senao */
+.aj-nav__marca--logotipo span { font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-3); }
+/* @fim */
+/* @fim */
+/* @se caixa-alta */
+.aj-nav__grupo { font: 500 11px/16px «PILHA_TITULO»; letter-spacing: 0.08em; text-transform: uppercase; color: var(--texto-3); padding: 14px 10px 6px; }
+/* @senao */
+.aj-nav__grupo { font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-3); padding: 14px 10px 6px; }
+/* @fim */
+.aj-nav__item { display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 10px; border-radius: var(--raio-md); color: var(--texto-2);
+  font: 500 14px/20px «PILHA_TEXTO»; text-decoration: none; transition: background-color var(--tempo-rapido) var(--curva-marca), color var(--tempo-rapido) var(--curva-marca); }
+.aj-nav__item svg { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.aj-nav__item:hover { background: var(--superficie-2); color: var(--texto); }
+.aj-nav__item[aria-current="page"] { background: var(--realce); color: var(--sobre-realce); font-weight: 600; }
+.aj-nav__contador { margin-left: auto; font: 600 11px/16px «PILHA_TEXTO»; font-variant-numeric: tabular-nums; padding: 1px 7px; border-radius: var(--raio-pilula); background: var(--superficie-2); color: var(--texto-2); }
+
+/* @se luz simbolo */
+@media (prefers-reduced-motion: reduce) { .aj-halo--respira::before, .aj-carregando path { animation: none; } .aj * { transition: none !important; } }
+/* @senao */
+@media (prefers-reduced-motion: reduce) { .aj-carregando path, .aj-carregando > span { animation: none; } .aj * { transition: none !important; } }
+/* @fim */
+/* @se luz tipografica */
+@media (prefers-reduced-motion: reduce) { .aj-halo--respira::before { animation: none; } }
+/* @fim */
+
+/* ===================== v2.1 · componentes completados em 28/09/2026 ===================== */
+
+/* Botão só com ícone (sempre com aria-label) */
+.aj-botao-icone { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: var(--raio-md); border: 1px solid transparent; background: transparent; color: var(--texto-2); cursor: pointer;
+  transition: background-color var(--tempo-rapido) var(--curva-marca), color var(--tempo-rapido) var(--curva-marca); }
+.aj-botao-icone:hover, .aj-botao-icone[aria-expanded="true"] { background: var(--superficie-2); color: var(--texto); }
+.aj-botao-icone--contorno { border-color: var(--borda-controle); background: var(--superficie); }
+.aj-botao-icone svg { width: 18px; height: 18px; }
+
+/* Menu suspenso (dropdown) — também é a superfície da seleção */
+.aj-menu { display: grid; gap: 2px; min-width: 220px; padding: 6px; background: var(--superficie); border: 1px solid var(--linha); border-radius: 14px; box-shadow: var(--sombra-2); z-index: var(--camada-menu); }
+.aj-menu__item { display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 10px; border-radius: 8px; border: 0; background: transparent; width: 100%; text-align: left;
+  font: 500 14px/20px «PILHA_TEXTO»; color: var(--texto); cursor: pointer; text-decoration: none; transition: background-color var(--tempo-rapido) var(--curva-marca); }
+.aj-menu__item svg { width: 16px; height: 16px; flex: none; color: var(--texto-2); }
+.aj-menu__item:hover, .aj-menu__item[data-ativo="true"] { background: var(--superficie-2); }
+.aj-menu__item[aria-selected="true"], .aj-menu__item[aria-checked="true"] { background: var(--realce); color: var(--sobre-realce); font-weight: 600; }
+.aj-menu__item[aria-selected="true"] svg, .aj-menu__item[aria-checked="true"] svg { color: var(--sobre-realce); }
+.aj-menu__item--perigo, .aj-menu__item--perigo svg { color: var(--critico); }
+.aj-menu__item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.aj-menu__atalho { margin-left: auto; font: 500 12px/16px «PILHA_TEXTO»; color: var(--texto-3); }
+/* @se caixa-alta */
+.aj-menu__grupo { font: 500 11px/16px «PILHA_TITULO»; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-3); padding: 8px 10px 4px; }
+/* @senao */
+.aj-menu__grupo { font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-3); padding: 8px 10px 4px; }
+/* @fim */
+.aj-menu__divisor { height: 1px; background: var(--linha); margin: 4px -6px; }
+.aj-menu__busca { margin: 0 0 4px; }
+.aj-menu__vazio { padding: 10px; font: 400 13px/18px «PILHA_TEXTO»; color: var(--texto-3); }
+
+/* Seleção personalizada (abre um aj-menu) */
+.aj-selecao { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 40px; width: 100%; padding: 0 12px; border-radius: var(--raio-md); border: 1px solid var(--borda-controle);
+  background: var(--superficie); color: var(--texto); font: 400 14px/20px «PILHA_TEXTO»; cursor: pointer; text-align: left; }
+.aj-selecao:hover { border-color: var(--texto-2); }
+.aj-selecao[aria-expanded="true"] { border-color: var(--acao); outline: 2px solid var(--foco); outline-offset: 2px; }
+.aj-selecao__valor--vazio { color: var(--texto-3); }
+.aj-selecao svg { width: 16px; height: 16px; color: var(--texto-2); flex: none; }
+
+/* Caixa de marcar, opção única e interruptor */
+.aj-marcar, .aj-opcao, .aj-interruptor { display: inline-flex; align-items: flex-start; gap: 10px; font: 500 14px/20px «PILHA_TEXTO»; color: var(--texto); cursor: pointer; }
+.aj-marcar input, .aj-opcao input { appearance: none; flex: none; width: 18px; height: 18px; margin: 1px 0 0; border: 1.5px solid var(--borda-controle); background: var(--superficie); display: grid; place-items: center; cursor: pointer;
+  transition: background-color var(--tempo-rapido) var(--curva-marca), border-color var(--tempo-rapido) var(--curva-marca); }
+.aj-marcar input { border-radius: 5px; }
+.aj-marcar input:checked, .aj-marcar input:indeterminate { background: var(--acao); border-color: var(--acao); }
+.aj-marcar input:checked::after { content: ""; width: 5px; height: 9px; border: solid var(--sobre-acao); border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
+.aj-marcar input:indeterminate::after { content: ""; width: 8px; height: 2px; background: var(--sobre-acao); border-radius: 1px; }
+.aj-opcao input { border-radius: 50%; }
+.aj-opcao input:checked { border-color: var(--acao); }
+.aj-opcao input:checked::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--acao); }
+.aj-marcar small, .aj-opcao small, .aj-interruptor small { display: block; font: 400 13px/18px «PILHA_TEXTO»; color: var(--texto-2); }
+.aj-interruptor input { appearance: none; flex: none; position: relative; width: 36px; height: 20px; margin: 0; border-radius: var(--raio-pilula); background: var(--borda-controle); cursor: pointer; transition: background-color var(--tempo-rapido) var(--curva-marca); }
+.aj-interruptor input::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--superficie); box-shadow: 0 1px 2px rgba(«RGB_ESCURO»,.25); transition: transform var(--tempo-base) var(--curva-marca); }
+.aj-interruptor input:checked { background: var(--acao); }
+.aj-interruptor input:checked::after { transform: translateX(16px); }
+[data-theme="escuro"] .aj-interruptor input::after { background: var(--texto); }
+[data-theme="escuro"] .aj-interruptor input:checked::after { background: var(--fundo); }
+.aj-marcar input:disabled, .aj-opcao input:disabled, .aj-interruptor input:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Busca e filtros */
+.aj-busca { position: relative; display: block; }
+.aj-busca svg { position: absolute; left: 12px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); color: var(--texto-3); pointer-events: none; }
+.aj-busca .aj-entrada { padding-left: 38px; }
+.aj-filtros { display: flex; flex-wrap: wrap; gap: 8px; }
+.aj-filtro { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: var(--raio-pilula); border: 1px solid var(--borda-controle); background: var(--superficie);
+  font: 500 13px/18px «PILHA_TEXTO»; color: var(--texto-2); cursor: pointer; transition: background-color var(--tempo-rapido) var(--curva-marca); }
+.aj-filtro:hover { background: var(--superficie-2); color: var(--texto); }
+.aj-filtro[aria-pressed="true"] { background: var(--realce); border-color: transparent; color: var(--sobre-realce); font-weight: 600; }
+.aj-filtro__conta { font-variant-numeric: tabular-nums; color: var(--texto-3); }
+.aj-filtro[aria-pressed="true"] .aj-filtro__conta { color: var(--sobre-realce); }
+
+/* Formulário em etapas (a aplicação / diagnóstico) */
+.aj-etapas { display: grid; gap: 20px; width: min(460px, 100%); }
+/* @se caixa-alta */
+.aj-etapas__topo { display: flex; justify-content: space-between; font: 500 12px/16px «PILHA_TITULO»; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-2); }
+/* @senao */
+.aj-etapas__topo { display: flex; justify-content: space-between; font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-2); font-variant-numeric: tabular-nums; }
+/* @fim */
+.aj-etapas__pergunta { font: 300 24px/30px «PILHA_TITULO»; letter-spacing: -.025em; margin: 0; color: var(--texto); }
+.aj-etapas__escolhas { display: grid; gap: 8px; }
+.aj-escolha { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--borda-controle); border-radius: var(--raio-md); background: var(--superficie);
+  font: 500 15px/20px «PILHA_TEXTO»; color: var(--texto); cursor: pointer; transition: background-color var(--tempo-rapido) var(--curva-marca), border-color var(--tempo-rapido) var(--curva-marca); }
+.aj-escolha:hover { background: var(--superficie-2); }
+.aj-escolha input { appearance: none; flex: none; width: 18px; height: 18px; margin: 0; border: 1.5px solid var(--borda-controle); border-radius: 50%; display: grid; place-items: center; }
+.aj-escolha input:checked { border-color: var(--acao); } .aj-escolha input:checked::after { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--acao); }
+.aj-escolha:has(input:checked) { border-color: var(--acao); background: var(--realce); color: var(--sobre-realce); }
+.aj-etapas__acoes { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.aj-etapas__nota { font: 500 12px/16px «PILHA_TEXTO»; color: var(--texto-3); margin: 0; text-align: center; }
+
+/* Progresso */
+.aj-progresso { display: grid; gap: 8px; }
+.aj-progresso__rotulo { display: flex; justify-content: space-between; font: 500 13px/18px «PILHA_TEXTO»; color: var(--texto-2); font-variant-numeric: tabular-nums; }
+.aj-progresso__trilho { height: 6px; border-radius: var(--raio-pilula); background: var(--superficie-2); overflow: hidden; }
+.aj-progresso__barra { display: block; height: 100%; border-radius: var(--raio-pilula); background: var(--acao); transition: width var(--tempo-lento) var(--curva-marca); }
+
+/* Abas */
+.aj-abas { display: flex; gap: 4px; border-bottom: 1px solid var(--linha); overflow-x: auto; }
+.aj-aba { height: 40px; padding: 0 12px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: transparent; font: 500 14px/20px «PILHA_TEXTO»; color: var(--texto-2); cursor: pointer; white-space: nowrap;
+  transition: color var(--tempo-rapido) var(--curva-marca), border-color var(--tempo-rapido) var(--curva-marca); }
+.aj-aba:hover { color: var(--texto); }
+.aj-aba[aria-selected="true"] { color: var(--texto); font-weight: 600; border-bottom-color: var(--acao); }
+.aj-abas--segmento { display: inline-flex; gap: 2px; padding: 4px; border: 0; border-radius: 12px; background: var(--superficie-2); }
+.aj-abas--segmento .aj-aba { height: 32px; border: 0; margin: 0; border-radius: 8px; }
+.aj-abas--segmento .aj-aba[aria-selected="true"] { background: var(--superficie); box-shadow: var(--sombra-1); }
+
+/* Paginação e trilha */
+.aj-paginacao { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 500 13px/18px «PILHA_TEXTO»; color: var(--texto-2); }
+.aj-paginacao__paginas { display: flex; gap: 4px; }
+.aj-pagina { min-width: 32px; height: 32px; padding: 0 8px; border-radius: 8px; border: 0; background: transparent; font: 500 13px/18px «PILHA_TEXTO»; color: var(--texto-2); cursor: pointer; font-variant-numeric: tabular-nums; display: inline-grid; place-items: center; }
+.aj-pagina:hover { background: var(--superficie-2); color: var(--texto); }
+.aj-pagina[aria-current="page"] { background: var(--realce); color: var(--sobre-realce); font-weight: 600; }
+.aj-pagina svg { width: 16px; height: 16px; }
+.aj-trilha ol { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; font: 500 13px/18px «PILHA_TEXTO»; }
+.aj-trilha li { display: flex; gap: 6px; color: var(--texto-3); }
+.aj-trilha li + li::before { content: "/"; color: var(--texto-3); }
+.aj-trilha a { color: var(--texto-2); text-decoration: none; } .aj-trilha a:hover { color: var(--texto); text-decoration: underline; }
+.aj-trilha [aria-current="page"] { color: var(--texto); }
+
+/* Modal, painel lateral e fundo escurecido */
+.aj-veu { position: fixed; inset: 0; background: rgba(«RGB_ESCURO»,.45); z-index: var(--camada-painel); }
+.aj-veu--modal { z-index: calc(var(--camada-modal) - 1); }
+[data-theme="escuro"] .aj-veu { background: rgba(0,0,0,.6); }
+.aj-modal { width: min(480px, 100%); display: grid; gap: 16px; padding: 24px; background: var(--superficie); border-radius: var(--raio-xl); box-shadow: var(--sombra-3); z-index: var(--camada-modal); }
+.aj-modal__cabeca { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.aj-modal__titulo { font: 500 20px/26px «PILHA_TITULO»; letter-spacing: -.02em; margin: 0; color: var(--texto); }
+.aj-modal__texto { font: 400 14px/21px «PILHA_TEXTO»; color: var(--texto-2); margin: 0; }
+.aj-modal__acoes { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+.aj-painel { width: min(440px, 100%); height: 100%; display: grid; grid-template-rows: auto 1fr auto; background: var(--superficie); border-radius: var(--raio-xl) 0 0 var(--raio-xl); box-shadow: var(--sombra-3); z-index: calc(var(--camada-painel) + 1); }
+.aj-painel__cabeca { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 20px 16px 24px; border-bottom: 1px solid var(--linha); }
+.aj-painel__corpo { padding: 24px; overflow-y: auto; display: grid; gap: 20px; align-content: start; }
+.aj-painel__pe { display: flex; justify-content: flex-end; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--linha); }
+
+/* Dica (tooltip): invertida, curta, sem ação dentro */
+.aj-dica { position: relative; display: inline-block; max-width: 240px; padding: 6px 10px; border-radius: 8px; background: var(--texto); color: var(--fundo); font: 600 12px/16px «PILHA_TEXTO»; z-index: var(--camada-dica); }
+.aj-dica::after { content: ""; position: absolute; left: 50%; bottom: -4px; width: 8px; height: 8px; background: var(--texto); transform: translateX(-50%) rotate(45deg); border-radius: 1px; }
+
+/* Alerta na página */
+.aj-alerta { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--raio-lg); background: var(--realce); color: var(--texto); }
+.aj-alerta__icone { flex: none; width: 20px; height: 20px; margin-top: 1px; color: var(--sobre-realce); }
+.aj-alerta__titulo { font: 600 14px/20px «PILHA_TEXTO»; margin: 0; }
+.aj-alerta__texto { font: 400 14px/20px «PILHA_TEXTO»; margin: 2px 0 0; color: var(--texto-2); }
+.aj-alerta__acao { margin-left: auto; align-self: center; }
+.aj-alerta--sucesso { background: var(--sucesso-fundo); } .aj-alerta--sucesso .aj-alerta__icone { color: var(--sucesso); }
+.aj-alerta--atencao { background: var(--atencao-fundo); } .aj-alerta--atencao .aj-alerta__icone { color: var(--atencao); }
+.aj-alerta--critico { background: var(--critico-fundo); } .aj-alerta--critico .aj-alerta__icone { color: var(--critico); }
+
+/* Esqueleto de carregamento */
+.aj-esqueleto { display: block; border-radius: 8px; background: var(--superficie-2); animation: aj-pulsa 1.6s var(--curva-marca) infinite; }
+@keyframes aj-pulsa { 50% { opacity: .55; } }
+
+/* Avatar */
+.aj-avatar { display: inline-grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: var(--realce); color: var(--sobre-realce); font: 500 14px/1 «PILHA_TITULO»; letter-spacing: -.02em; }
+.aj-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.aj-avatar--sm { width: 28px; height: 28px; font-size: 11px; } .aj-avatar--lg { width: 48px; height: 48px; font-size: 17px; }
+.aj-avatares { display: flex; } .aj-avatares .aj-avatar { box-shadow: 0 0 0 2px var(--superficie); } .aj-avatares .aj-avatar + .aj-avatar { margin-left: -8px; }
+
+/* Sanfona (perguntas frequentes, detalhes) */
+.aj-sanfona { border-bottom: 1px solid var(--linha); }
+.aj-sanfona summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; list-style: none; cursor: pointer; font: 400 18px/24px «PILHA_TITULO»; letter-spacing: -.015em; color: var(--texto); }
+.aj-sanfona summary::-webkit-details-marker { display: none; }
+.aj-sanfona summary svg { width: 18px; height: 18px; flex: none; color: var(--texto-2); transition: transform var(--tempo-base) var(--curva-marca); }
+.aj-sanfona[open] summary svg { transform: rotate(45deg); }
+.aj-sanfona__corpo { padding: 0 0 20px; font: 400 15px/24px «PILHA_TEXTO»; color: var(--texto-2); max-width: 65ch; }
+
+/* Gráfico */
+.aj-grafico { display: grid; gap: 16px; }
+.aj-grafico__cabeca { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.aj-grafico__legenda { display: flex; flex-wrap: wrap; gap: 16px; list-style: none; margin: 0; padding: 0; font: 500 13px/18px «PILHA_TEXTO»; color: var(--texto-2); }
+.aj-grafico__legenda li { display: flex; align-items: center; gap: 6px; } .aj-grafico__legenda i { width: 10px; height: 10px; border-radius: 3px; }
+.aj-grafico svg { width: 100%; height: auto; overflow: visible; }
+.aj-grafico .grade { stroke: var(--linha); stroke-width: 1; }
+.aj-grafico .eixo { fill: var(--texto-3); font: 500 12px «PILHA_TEXTO»; }
+.aj-grafico .valor { fill: var(--texto); font: 600 12px «PILHA_TEXTO»; }
+.aj-grafico .d1 { fill: var(--dado-1); } .aj-grafico .d2 { fill: var(--dado-2); } .aj-grafico .d3 { fill: var(--dado-3); }
+.aj-grafico .l1 { stroke: var(--dado-1); } .aj-grafico .l2 { stroke: var(--dado-2); } .aj-grafico .l3 { stroke: var(--dado-3); }
+.aj-grafico .linha-serie { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.aj-grafico .ponto { stroke: var(--superficie); stroke-width: 2; }
+.aj-grafico .marca-barra:hover, .aj-grafico .ponto:hover { opacity: .8; }
+
+/* Depoimento em vídeo */
+.aj-depoimento { display: grid; gap: 16px; }
+.aj-depoimento__video { position: relative; aspect-ratio: 16 / 9; border-radius: var(--raio-lg); overflow: hidden; display: grid; place-items: center; }
+/* @se luz */
+.aj-depoimento__video { background: radial-gradient(70% 90% at 30% 20%, «ESCURO_CLARO», «HEX_ESCURO»); }
+/* @senao */
+.aj-depoimento__video { background: var(--superficie-2); }
+/* @fim */
+.aj-depoimento__video img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.aj-depoimento__play { position: relative; width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--superficie); color: var(--acao); display: grid; place-items: center; cursor: pointer; box-shadow: var(--sombra-2); }
+.aj-depoimento__play svg { width: 20px; height: 20px; margin-left: 3px; }
+.aj-depoimento__frase { font: 300 20px/28px «PILHA_TITULO»; letter-spacing: -.02em; color: var(--texto); margin: 0; }
+.aj-depoimento__autor { display: flex; align-items: center; gap: 12px; font: 400 13px/18px «PILHA_TEXTO»; color: var(--texto-2); }
+.aj-depoimento__autor b { display: block; font: 600 14px/20px «PILHA_TEXTO»; color: var(--texto); }
+
+/* Cabeçalho e rodapé do site */
+.aj-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; }
+.aj-cabecalho__marca { display: flex; align-items: center; gap: 10px; font: 400 19px/1 «PILHA_TITULO»; letter-spacing: -.035em; color: var(--texto); text-decoration: none; }
+/* @se simbolo */
+.aj-cabecalho__marca .aj-simbolo { width: 28px; height: 28px; }
+/* @fim */
+.aj-cabecalho__links { display: flex; gap: 28px; font: 500 14px/20px «PILHA_TEXTO»; }
+.aj-cabecalho__links a { color: var(--texto-2); text-decoration: none; } .aj-cabecalho__links a:hover { color: var(--texto); }
+.aj-cabecalho__menu { display: none; }
+@media (max-width: 760px) { .aj-cabecalho { padding: 16px 0; } .aj-cabecalho__links { display: none; } .aj-cabecalho__marca span { display: none; } .aj-cabecalho__menu { display: inline-grid; } }
+.aj-menu-movel { display: grid; gap: 4px; padding: 12px; background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-lg); box-shadow: var(--sombra-2); }
+.aj-menu-movel a { display: flex; align-items: center; min-height: 48px; padding: 0 12px; border-radius: var(--raio-md); font: 400 18px/24px «PILHA_TITULO»; color: var(--texto); text-decoration: none; }
+.aj-menu-movel a:hover { background: var(--superficie-2); }
+.aj-rodape { display: grid; gap: 32px; padding: 48px 0 32px; border-top: 1px solid var(--linha); }
+.aj-rodape__topo { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.aj-rodape__frase { font: 300 22px/28px «PILHA_TITULO»; letter-spacing: -.02em; color: var(--texto); max-width: 22ch; margin: 12px 0 0; } .aj-rodape__frase b { font-weight: 600; }
+.aj-rodape__colunas { display: flex; gap: 48px; flex-wrap: wrap; }
+.aj-rodape__coluna { display: grid; gap: 10px; align-content: start; font: 400 14px/20px «PILHA_TEXTO»; }
+/* @se caixa-alta */
+.aj-rodape__coluna strong { font: 500 12px/16px «PILHA_TITULO»; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-3); }
+/* @senao */
+.aj-rodape__coluna strong { font: «ROTULO_FONTE»; letter-spacing: «ROTULO_ESPACO»; color: var(--texto-3); }
+/* @fim */
+.aj-rodape__coluna a { color: var(--texto-2); text-decoration: none; } .aj-rodape__coluna a:hover { color: var(--texto); }
+.aj-rodape__base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 20px; border-top: 1px solid var(--linha); font: 400 12px/16px «PILHA_TEXTO»; color: var(--texto-3); }
+
+@media (prefers-reduced-motion: reduce) { .aj-esqueleto { animation: none; } }
+
+/* ===================== v2.2 · documentos e relatórios (HTML que vira PDF) ===================== */
+
+/* Sumário: grade leve de colunas iguais, sem linhas; número de dois dígitos na cor de ação */
+.aj-sumario { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 32px; }
+.aj-sumario--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.aj-sumario a { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--texto-2); font: 400 15px/21px «PILHA_TITULO»; letter-spacing: -0.01em; transition: color var(--tempo-rapido) var(--curva-marca); }
+.aj-sumario a:hover { color: var(--texto); }
+.aj-sumario__n { flex: none; font: 500 12px/21px «PILHA_TITULO»; color: var(--acao); font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .aj-sumario, .aj-sumario--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; } }
+@media print { .aj-sumario, .aj-sumario--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 32px; } }
+
+/* Documento: página de leitura de até 960 px que também imprime em A4 */
+.aj-doc { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+.aj-doc__topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 20px 0; border-bottom: 1px solid var(--linha); }
+/* @se simbolo */
+.aj-doc__topo .aj-simbolo { width: 28px; height: 28px; flex: none; }
+/* @fim */
+.aj-doc__topo > :first-child { white-space: nowrap; }
+.aj-doc__capa { display: grid; gap: 20px; padding: 72px 0 40px; }
+.aj-doc__meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.aj-doc__sumario { padding: 8px 0 56px; }
+.aj-doc__secao { padding: 40px 0; border-top: 1px solid var(--linha); scroll-margin-top: 16px; }
+.aj-doc__cabeca { display: grid; gap: 10px; margin-bottom: 28px; }
+.aj-doc__grade { display: grid; gap: 16px; }
+.aj-doc__grade--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.aj-doc__grade--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.aj-doc__grade--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 760px) { .aj-doc__grade--3 { grid-template-columns: 1fr; } .aj-doc__grade--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .aj-doc__grade--2, .aj-doc__grade--4 { grid-template-columns: 1fr; } }
+
+@page { size: A4; margin: 14mm 0; }
+@media print {
+  .aj-doc * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .aj-doc { max-width: none; padding: 0 16mm; }
+  .aj-doc__capa { padding: 32px 0 28px; }
+  .aj-doc__sumario { padding: 0 0 24px; }
+  .aj-doc__secao { padding: 24px 0; }
+  .aj-doc__cabeca { display: block; break-after: avoid; break-inside: avoid; }
+  .aj-doc__cabeca > * + * { margin-top: 10px; }
+  /* reserva espaço depois do cabeçalho: se o conteúdo não couber, o cabeçalho desce junto */
+  .aj-doc__cabeca::after { content: ""; display: block; height: 200px; margin-bottom: -200px; }
+  .aj-doc .aj-cartao, .aj-doc .aj-tabela tr, .aj-doc .aj-alerta, .aj-doc li, .aj-doc figure { break-inside: avoid; }
+  .aj-doc h2, .aj-doc h3 { break-after: avoid; }
+  .aj-doc p { orphans: 3; widows: 3; }
+  /* @se luz */
+  .aj-doc .aj-halo::before { animation: none; }
+  /* @fim */
+  .aj-doc .so-tela, .aj-doc .aj-botao-icone { display: none; }
+  .aj-doc__grade--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ===================== v2.3 · formulário-isca: etapas com trilho, campo monetário, atalhos, comparação e resultado (06/10/2026) ===================== */
+
+/* Formulário em etapas em tela inteira: trilho à esquerda no computador (contador, etapas, nota); no celular, a barra de etapa no topo */
+.aj-etapas-tela { display: grid; grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); min-height: 100vh; background: var(--fundo); }
+.aj-etapas-tela__principal { display: grid; align-content: center; padding: 48px clamp(24px, 5vw, 80px); }
+.aj-trilho { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 32px; padding: 40px; background: var(--superficie-2); color: var(--texto); }
+.aj-trilho__contador { display: flex; align-items: baseline; gap: 8px; margin: 0; font: 500 88px/0.9 «PILHA_TITULO»; letter-spacing: -0.03em; font-variant-numeric: tabular-nums lining-nums; color: var(--texto); }
+.aj-trilho__contador span { font-size: 24px; font-weight: 400; letter-spacing: 0; color: var(--texto-2); }
+.aj-trilho__etapas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font: 400 15px/20px «PILHA_TEXTO»; }
+.aj-trilho__etapas li { display: flex; align-items: center; gap: 12px; color: var(--texto-2); }
+.aj-trilho__etapas li::before { content: ""; flex: none; width: 24px; height: 1px; background: var(--borda-controle); }
+.aj-trilho__etapas li[aria-current] { color: var(--texto); font-weight: 600; }
+.aj-trilho__etapas li[aria-current]::before { height: 2px; background: var(--acao); }
+.aj-trilho__nota { margin: 0; font: 400 14px/20px «PILHA_TEXTO»; color: var(--texto-2); max-width: 32ch; }
+.aj-etapas-barra { display: none; }
+.aj-etapas-barra__passo { justify-self: end; font: 400 15px/20px «PILHA_TEXTO»; font-variant-numeric: tabular-nums; color: var(--texto-2); }
+.aj-etapas-barra__passo b { font-weight: 600; color: var(--texto); }
+.aj-etapas-barra__linha { grid-column: 1 / -1; display: block; height: 2px; background: var(--linha); }
+.aj-etapas-barra__linha i { display: block; height: 100%; background: var(--acao); transition: width var(--tempo-lento) var(--curva-marca); }
+@media (max-width: 1023px) {
+  .aj-etapas-tela { grid-template-columns: minmax(0, 1fr); }
+  .aj-trilho { display: none; }
+  .aj-etapas-barra { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px 16px; padding: 14px 20px 0; position: sticky; top: 0; background: var(--fundo); z-index: var(--camada-fixo); }
+  .aj-etapas-tela__principal { align-content: start; padding: 28px 20px 32px; }
+}
+
+/* Atalhos (chips): valores prontos que preenchem o campo de cima; o escolhido fica com aria-pressed="true".
+   Até cinco numa linha, em colunas iguais (nunca um sozinho na segunda linha); no celular, três colunas: cinco fecham
+   3 + 2 e quatro fecham 2 + 2. O valor fica centrado na coluna. */
+.aj-atalhos { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; }
+@media (max-width: 760px) {
+  .aj-atalhos { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .aj-atalhos:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.aj-atalho { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 8px; border: 1px solid var(--borda-controle); border-radius: var(--raio-md); background: var(--superficie);
+  color: var(--texto); font: 400 15px/20px «PILHA_TEXTO»; font-variant-numeric: tabular-nums lining-nums; cursor: pointer; white-space: nowrap;
+  transition: background-color var(--tempo-rapido) var(--curva-marca), color var(--tempo-rapido) var(--curva-marca), border-color var(--tempo-rapido) var(--curva-marca); }
+.aj-atalho:hover { background: var(--superficie-2); }
+.aj-atalho[aria-pressed="true"] { background: var(--acao); border-color: var(--acao); color: var(--sobre-acao); }
+
+/* Campo monetário: o prefixo da moeda fica dentro do campo, fora do valor digitado; número grande e tabular */
+.aj-moeda { position: relative; display: flex; align-items: center; }
+.aj-moeda__prefixo { position: absolute; left: 16px; font: 400 18px/1 «PILHA_TEXTO»; color: var(--texto-2); pointer-events: none; }
+.aj-moeda .aj-entrada { padding-left: 52px; }
+.aj-entrada--grande { height: 56px; font-size: 21px; font-variant-numeric: tabular-nums lining-nums; }
+
+/* Comparação de dois valores (hoje × depois): dois números lado a lado, o do resultado marcado por um fio em cima.
+   Neutra: nunca vermelho para um e verde para o outro, porque a comparação não é um status. */
+.aj-comparacao { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); }
+.aj-comparacao__item { display: grid; gap: 6px; align-content: start; padding: 20px 24px 20px 0; }
+.aj-comparacao__item + .aj-comparacao__item { padding-left: 24px; border-left: 1px solid var(--linha); }
+.aj-comparacao__item--resultado { box-shadow: inset 0 3px 0 var(--acao); }
+.aj-comparacao__valor { font: 500 34px/1.1 «PILHA_TITULO»; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; color: var(--texto); white-space: nowrap; }
+.aj-comparacao__nota { font: 400 14px/20px «PILHA_TEXTO»; color: var(--texto-2); }
+@media (max-width: 560px) { .aj-comparacao { grid-template-columns: minmax(0, 1fr); } .aj-comparacao__item + .aj-comparacao__item { padding-left: 0; border-left: 0; border-top: 1px solid var(--linha); } }
+
+/* Resultado: o número que a pessoa veio buscar, com rótulo, as linhas que o explicam e a ressalva, uma vez, legível */
+.aj-resultado { display: grid; gap: 20px; }
+.aj-resultado__destaque { display: grid; gap: 4px; padding-left: 20px; border-left: 3px solid var(--acao); }
+.aj-resultado__valor { margin: 0; font: 500 64px/1 «PILHA_TITULO»; letter-spacing: -0.025em; font-variant-numeric: tabular-nums lining-nums; color: var(--texto); white-space: nowrap; }
+.aj-resultado__linhas { display: grid; margin: 0; }
+.aj-resultado__linha { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-top: 1px solid var(--linha); font: 400 16px/22px «PILHA_TEXTO»; font-variant-numeric: tabular-nums lining-nums; }
+.aj-resultado__linha dt { color: var(--texto-2); }
+.aj-resultado__linha dd { margin: 0; color: var(--texto); text-align: right; white-space: nowrap; }
+.aj-resultado__ressalva { margin: 0; font: 400 14px/20px «PILHA_TEXTO»; color: var(--texto-2); max-width: 70ch; }
+@media (max-width: 560px) { .aj-resultado__valor { font-size: 44px; } }
+
+/* Modal como <dialog> nativo e modal de leitura (política, termos): rola por dentro, nunca a página */
+dialog.aj-modal { border: 0; color: var(--texto); }
+dialog.aj-modal:not([open]) { display: none; }
+dialog.aj-modal::backdrop { background: rgba(«RGB_ESCURO»,.45); }
+.aj-modal--leitura { width: min(620px, 100%); max-height: calc(100vh - 40px); overflow-y: auto; }
+
+/* ===================== v2.4 · painel do computador ao celular, gráfico em preto e branco e piso de leitura e de toque (07/10/2026) ===================== */
+
+/* Painel (telas de sistema): menu lateral à esquerda e o conteúdo; título à esquerda e ações à direita, na mesma linha.
+   Abaixo de 1024 px o menu sai da lateral e vira a barra do topo (a marca + o botão de menu de 44 px); o botão abre o
+   menu como painel à esquerda (data-menu="aberto" no .aj-app, com o véu). Indicadores e cartões vão a uma coluna; a
+   tabela e o funil rolam dentro da própria caixa, nunca a página. */
+.aj-app { display: grid; grid-template-columns: auto minmax(0, 1fr); min-height: 100vh; background: var(--fundo); }
+.aj-app > .aj-nav { min-height: 100vh; }
+.aj-app__barra, .aj-app > .aj-app__veu { display: none; }
+.aj-app__conteudo { position: relative; min-width: 0; display: grid; gap: 28px; align-content: start; padding: 36px 40px 48px; container-type: inline-size; }
+.aj-app__cabeca { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 24px; }
+.aj-app__cabeca > :first-child { flex: 1 1 auto; min-width: 0; display: grid; gap: 6px; }
+.aj-app__acoes { display: flex; flex: none; gap: 8px; align-items: center; }
+/* O cabeçalho decide pela largura do CONTEÚDO, não da janela (o menu lateral come 220 a 270 px): título e ações na mesma
+   linha só com 860 px de conteúdo ou mais. Abaixo disso, o título ocupa a linha inteira e as ações descem para baixo dele,
+   à esquerda, com a principal primeiro; com menos de 520 px, empilham na largura da coluna. Assim o título nunca é
+   espremido até sobrar uma palavra sozinha (ex.: janela de 1093 px, notebook de 1366 a 125%). */
+@container (max-width: 859px) {
+  .aj-app__cabeca { flex-direction: column; align-items: flex-start; }
+  .aj-app__cabeca > :first-child { width: 100%; }
+  .aj-app__acoes { flex-wrap: wrap; }
+  .aj-app__acoes .aj-botao--principal { order: -1; }
+}
+@container (max-width: 519px) {
+  .aj-app__cabeca { align-items: stretch; }
+  .aj-app__acoes { display: grid; grid-template-columns: minmax(0, 1fr); }
+}
+.aj-indicadores { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* rótulo, número e nota alinhados entre os cartões, mesmo quando um rótulo quebra em duas linhas */
+.aj-indicadores > .aj-indicador { grid-row: span 3; grid-template-rows: subgrid; align-content: start; }
+.aj-app .aj-etiqueta { justify-self: start; }
+/* aviso (toast) da tela: no canto de baixo à direita; no celular, na largura da tela com a margem de 16 px */
+.aj-app__aviso { position: absolute; right: 40px; bottom: 28px; z-index: var(--camada-aviso); }
+@container (max-width: 880px) { .aj-indicadores { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (max-width: 520px) { .aj-indicadores { grid-template-columns: minmax(0, 1fr); } }
+.aj-funil { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(180px, 1fr); gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding-bottom: 4px; }
+.aj-funil__coluna { display: grid; gap: 8px; align-content: start; min-width: 0; padding: 12px; border-radius: var(--raio-lg); background: var(--superficie-2); scroll-snap-align: start; }
+.aj-funil__cabeca { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 2px 4px 6px; }
+.aj-funil__cabeca .aj-nav__contador { margin: 0; }
+@media (max-width: 1023px) {
+  .aj-app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .aj-app__barra { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; background: var(--superficie); border-bottom: 1px solid var(--linha); position: sticky; top: 0; z-index: var(--camada-fixo); }
+  .aj-app > .aj-nav { display: none; }
+  .aj-app[data-menu="aberto"] > .aj-nav { display: flex; position: fixed; inset: 0 auto 0 0; width: min(300px, 100% - 56px); height: 100%; z-index: calc(var(--camada-painel) + 1); box-shadow: var(--sombra-3); }
+  .aj-app[data-menu="aberto"] > .aj-app__veu { display: block; }
+  .aj-app__conteudo { padding: 24px 16px 40px; gap: 24px; }
+  .aj-app__aviso { left: 16px; right: 16px; bottom: 16px; width: auto; }
+}
+@media (max-width: 760px) {
+  .aj-funil { grid-auto-columns: calc(100% - 40px); scroll-snap-type: x mandatory; }
+}
+
+/* Gráfico com duas séries ou mais: a forma também separa as séries (impresso em preto e branco, daltonismo).
+   Série 2 tracejada, série 3 pontilhada; a amostra da legenda é a própria linha (svg pequeno na legenda). */
+.aj-grafico .tracejada { stroke-dasharray: 7 5; }
+.aj-grafico .pontilhada { stroke-dasharray: 1 5; }
+.aj-grafico .aj-grafico__legenda svg { flex: none; width: 24px; height: 10px; overflow: visible; }
+/* Gráfico no celular: um desenho próprio, mais estreito e com menos rótulos, nunca o do computador encolhido (a letra do
+   eixo encolheria junto). O cartão do gráfico é um contêiner: abaixo de 480 px de largura, o desenho largo dá lugar ao estreito.
+   Desenhe o largo com 480 de largura no viewBox e o estreito com 300, para a letra nunca sair menor que o corpo escrito. */
+.aj-grafico { container-type: inline-size; }
+.aj-grafico .aj-grafico__desenho--largo { max-width: 720px; }
+.aj-grafico .aj-grafico__desenho--estreito { display: none; max-width: 400px; }
+@container (max-width: 479px) { .aj-grafico .aj-grafico__desenho--largo { display: none; } .aj-grafico .aj-grafico__desenho--estreito { display: block; } }
+
+/* @se piso */
+/* Piso de leitura e de toque (marca.json, "piso"; padrão ligado): nenhum texto abaixo de 14 px e nenhum alvo de toque abaixo
+   de 44 × 44 px (botão, inclusive o pequeno, botão de ícone, campo, item de menu e de navegação, aba, filtro, atalho, página,
+   link de ação solto, caixa de marcar com o texto). Link dentro de uma frase fica fora. Conferido por verificacao/piso.js. */
+.aj-campo > label:not([class]), .aj-ajuda, .aj-indicador__variacao, .aj-etiqueta, .aj-aviso__texto, .aj-nav__contador, .aj-botao--sm, .aj-menu__atalho, .aj-menu__vazio,
+.aj-marcar small, .aj-opcao small, .aj-interruptor small, .aj-filtro, .aj-etapas__nota, .aj-progresso__rotulo, .aj-paginacao, .aj-pagina, .aj-trilha ol, .aj-dica,
+.aj-grafico__legenda, .aj-depoimento__autor, .aj-rodape__base, .aj-sumario__n { font-size: 14px; line-height: 20px; }
+/* @se caixa-alta */
+.aj-rotulo, .aj-tabela th, .aj-nav__grupo, .aj-menu__grupo, .aj-etapas__topo, .aj-rodape__coluna strong { font-size: 14px; line-height: 20px; }
+/* @fim */
+.aj-grafico .eixo, .aj-grafico .valor { font-size: 14px; }
+.aj-avatar--sm { width: 32px; height: 32px; font-size: 14px; }
+.aj-botao, .aj-entrada, .aj-selecao, .aj-menu__item, .aj-nav__item, .aj-aba, .aj-filtro, .aj-atalho, .aj-pagina { min-height: 44px; }
+.aj-abas--segmento .aj-aba { min-height: 44px; }
+.aj-botao-icone, .aj-pagina { min-width: 44px; }
+.aj-botao-icone { min-height: 44px; }
+.aj-marcar, .aj-opcao, .aj-interruptor { min-height: 44px; padding-block: 10px; }
+.aj-cabecalho__marca, .aj-trilha a, .aj-cabecalho__links a, .aj-rodape__base a { display: inline-flex; align-items: center; min-height: 44px; }
+/* O alvo de 44 px não muda a linha de base: a linha onde um link cresce centraliza tudo na vertical (o item atual da
+   trilha, a barra "/" e o texto da base do rodapé ficam na altura do link, não no alto). */
+.aj-trilha ol, .aj-trilha li, .aj-rodape__base, .aj-cabecalho__links { align-items: center; }
+.aj-rodape__coluna a { display: flex; align-items: center; min-height: 44px; }
+.aj-sumario a { min-height: 44px; }
+/* @fim */
+
+/* ===================== v2.5 · ações no celular: modal, painel lateral e alerta (07/10/2026) ===================== */
+/* Modal e painel lateral no celular: as ações empilham na largura da folha, a principal primeiro (em cima). No HTML a ordem
+   continua cancelar → ação (no computador, lado a lado à direita, a ação na ponta). */
+@media (max-width: 480px) {
+  .aj-modal__acoes, .aj-painel__pe { flex-direction: column-reverse; align-items: stretch; }
+  .aj-modal__acoes > *, .aj-painel__pe > * { width: 100%; }
+}
+/* Alerta com ação, no celular: o botão desce para baixo do texto, alinhado com ele, em vez de espremer o texto e o próprio rótulo */
+@media (max-width: 560px) {
+  .aj-alerta:has(> .aj-botao) { display: grid; grid-template-columns: auto minmax(0, 1fr); }
+  .aj-alerta > .aj-botao { grid-column: 2; justify-self: start; }
+}

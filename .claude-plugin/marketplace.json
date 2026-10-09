@@ -1,0 +1,15 @@
+{
+  "name": "identidade-squad",
+  "description": "Squad de identidade visual da Anúncio Jurídico",
+  "owner": { "name": "Samuel Macario" },
+  "plugins": [
+    {
+      "name": "identidade-visual",
+      "description": "Identidade visual completa e design system de uma marca, terminando na skill de design dela.",
+      "source": "./plugins/identidade-visual",
+      "version": "1.0.0",
+      "category": "design",
+      "tags": ["design", "identidade-visual", "design-system", "pt-br"]
+    }
+  ]
+}

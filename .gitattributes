@@ -1,0 +1,8 @@
+# Os scripts do squad rodam em bash — no Windows, via Git Bash.
+# Sem esta regra o core.autocrlf=true do Git for Windows converte o arquivo
+# para CRLF no clone, e o shebang quebra com "bad interpreter" / "$'\r'".
+*.sh text eol=lf
+
+# LF também no resto, pra diff limpo entre Mac e Windows.
+*.md   text eol=lf
+*.json text eol=lf

@@ -1,0 +1,473 @@
+{
+ "_leia": "Exemplo preenchido com a marca AJ v2.3. Copie para projetos/<slug>/marca.json e troque tudo. Explicação de cada campo em molde-marca/LEIA-ME.md.",
+ "nome": "Anúncio Jurídico",
+ "sigla": "AJ",
+ "prefixo": "aj",
+ "slug": "anuncio-juridico",
+ "piso": false,
+ "_piso": "A AJ v2.3 nasceu antes do piso de 14 px de texto e 44 px de alvo de toque (07/10/2026); marca nova nunca leva este campo. Ao fazer a próxima versão da AJ, apague o campo e confira com verificacao/piso.js.",
+ "produtos": {
+  "sistema": "AJ OPS",
+  "crm": "Nosso CRM",
+  "metodo": "Método EDL"
+ },
+ "fontes": {
+  "titulo": {
+   "familia": "Sora",
+   "pilha": "Sora, system-ui, sans-serif",
+   "pesos": [
+    300,
+    400,
+    500,
+    600
+   ],
+   "ttf_url": "https://github.com/google/fonts/raw/main/ofl/sora/Sora%5Bwght%5D.ttf"
+  },
+  "texto": {
+   "familia": "Manrope",
+   "pilha": "Manrope, system-ui, sans-serif",
+   "pesos": [
+    400,
+    500,
+    600,
+    700
+   ]
+  },
+  "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@300;400;500;600&display=swap"
+ },
+ "papeis": {
+  "primaria": "violeta",
+  "primaria_forte": "violeta-forte",
+  "escuro": "noite",
+  "escuro_claro": "#221850",
+  "luz": "luz",
+  "realce_claro": "lavanda",
+  "fundo_claro": "branco-quente",
+  "nevoa": "nevoa"
+ },
+ "cores": [
+  {
+   "nome": "violeta",
+   "hex": "#5B2BE0",
+   "uso": "A cor da marca. Símbolo no claro, ação principal no claro, a palavra de destaque. Nunca em gradiente no símbolo."
+  },
+  {
+   "nome": "violeta-forte",
+   "hex": "#4A1FC4",
+   "uso": "Hover e pressionado da ação principal no claro."
+  },
+  {
+   "nome": "noite",
+   "hex": "#0B0620",
+   "uso": "Texto no claro; chão do tema escuro."
+  },
+  {
+   "nome": "lavanda",
+   "hex": "#D9CCFF",
+   "uso": "Símbolo sobre a Noite; hover da ação no escuro."
+  },
+  {
+   "nome": "luz",
+   "hex": "#B9A4FF",
+   "uso": "O violeta iluminado: halos e ação no escuro. Nunca carrega texto sobre fundo claro."
+  },
+  {
+   "nome": "nevoa",
+   "hex": "#F4F2FB",
+   "uso": "Chão claro de apoio; texto principal no escuro."
+  },
+  {
+   "nome": "branco-quente",
+   "hex": "#FCFBFF",
+   "uso": "Chão claro principal."
+  },
+  {
+   "nome": "grafite",
+   "hex": "#4B4566",
+   "uso": "Texto de apoio no claro."
+  }
+ ],
+ "semanticos": [
+  {
+   "nome": "fundo",
+   "claro": "{branco-quente}",
+   "escuro": "{noite}",
+   "uso": "Chão da página e do app."
+  },
+  {
+   "nome": "superficie",
+   "claro": "#FFFFFF",
+   "escuro": "#130D2A",
+   "uso": "Cartões, tabelas, menus, campos. Sobre `fundo`."
+  },
+  {
+   "nome": "superficie-2",
+   "claro": "{nevoa}",
+   "escuro": "#1A1236",
+   "uso": "Faixas, cabeçalho de tabela, área de filtro, hover de linha."
+  },
+  {
+   "nome": "texto",
+   "claro": "{noite}",
+   "escuro": "{nevoa}",
+   "uso": "Texto principal sobre `fundo`, `superficie` e `superficie-2` (17:1 ou mais nos dois temas)."
+  },
+  {
+   "nome": "texto-2",
+   "claro": "{grafite}",
+   "escuro": "#B3ABD1",
+   "uso": "Texto de apoio sobre `fundo`, `superficie` e `superficie-2` (8:1 ou mais)."
+  },
+  {
+   "nome": "texto-3",
+   "claro": "#6B6488",
+   "escuro": "#8F87B3",
+   "uso": "Placeholder, metadado, legenda. Sobre `fundo`, `superficie` e `superficie-2` (4,9:1 ou mais)."
+  },
+  {
+   "nome": "linha",
+   "claro": "#E6E1F3",
+   "escuro": "#2A2350",
+   "uso": "Divisórias e bordas de cartão. Decorativa: não separa sozinha um controle."
+  },
+  {
+   "nome": "borda-controle",
+   "claro": "#8E86AD",
+   "escuro": "#6B6399",
+   "uso": "Borda de campo, seleção e caixa de marcar (3:1 ou mais sobre `superficie`)."
+  },
+  {
+   "nome": "acao",
+   "claro": "{violeta}",
+   "escuro": "{luz}",
+   "uso": "Botão principal, link, item ativo, foco. Texto sobre ele: `sobre-acao`."
+  },
+  {
+   "nome": "acao-hover",
+   "claro": "{violeta-forte}",
+   "escuro": "{lavanda}",
+   "uso": "Hover e pressionado de `acao`."
+  },
+  {
+   "nome": "sobre-acao",
+   "claro": "#FFFFFF",
+   "escuro": "{noite}",
+   "uso": "Texto e ícone sobre `acao` e `acao-hover` (7:1 ou mais)."
+  },
+  {
+   "nome": "realce",
+   "claro": "#ECE6FF",
+   "escuro": "#241B4D",
+   "uso": "Fundo de item ativo na navegação, botão secundário, seleção."
+  },
+  {
+   "nome": "sobre-realce",
+   "claro": "#3A1C9E",
+   "escuro": "{lavanda}",
+   "uso": "Texto sobre `realce` (9:1 ou mais)."
+  },
+  {
+   "nome": "foco",
+   "claro": "{violeta}",
+   "escuro": "{luz}",
+   "uso": "Anel de foco: 2px sólido, 2px afastado. 6,6:1 ou mais em todo chão."
+  },
+  {
+   "nome": "simbolo",
+   "claro": "{violeta}",
+   "escuro": "{lavanda}",
+   "uso": "Cor do símbolo AJ no tema."
+  },
+  {
+   "nome": "sucesso",
+   "claro": "#15714A",
+   "escuro": "#5FD39B",
+   "uso": "Texto e ícone de status positivo, sempre com palavra. Sobre `superficie` e `sucesso-fundo`."
+  },
+  {
+   "nome": "sucesso-fundo",
+   "claro": "#E3F5EC",
+   "escuro": "#0F2A20",
+   "uso": "Fundo da etiqueta de sucesso."
+  },
+  {
+   "nome": "atencao",
+   "claro": "#945200",
+   "escuro": "#F2B85B",
+   "uso": "Texto e ícone de status que pede atenção, sempre com palavra."
+  },
+  {
+   "nome": "atencao-fundo",
+   "claro": "#FFF1D6",
+   "escuro": "#2D2110",
+   "uso": "Fundo da etiqueta de atenção."
+  },
+  {
+   "nome": "critico",
+   "claro": "#C0263A",
+   "escuro": "#FF8A96",
+   "uso": "Erro, risco, ação destrutiva, sempre com palavra ou ícone."
+  },
+  {
+   "nome": "critico-fundo",
+   "claro": "#FDE7EA",
+   "escuro": "#361420",
+   "uso": "Fundo da etiqueta crítica e do campo com erro."
+  },
+  {
+   "nome": "halo-1",
+   "claro": "rgba(185,164,255,0.42)",
+   "escuro": "rgba(91,43,224,0.30)",
+   "uso": "Primeira mancha do halo (fundo). Só em fundo, nunca no símbolo."
+  },
+  {
+   "nome": "halo-2",
+   "claro": "rgba(217,204,255,0.55)",
+   "escuro": "rgba(185,164,255,0.14)",
+   "uso": "Segunda mancha do halo."
+  },
+  {
+   "nome": "brilho",
+   "claro": "rgba(91,43,224,0.75)",
+   "escuro": "rgba(91,43,224,0.75)",
+   "uso": "Cor do brilho do símbolo lavanda no escuro."
+  },
+  {
+   "nome": "dado-1",
+   "claro": "{violeta}",
+   "escuro": "#8C74F2",
+   "uso": "Série 1 de gráfico, e a única quando o gráfico tem uma série. Só em gráficos."
+  },
+  {
+   "nome": "dado-2",
+   "claro": "#EB6834",
+   "escuro": "#D95926",
+   "uso": "Série 2 de gráfico. Cor exclusiva de dados: nunca em botão, texto ou fundo."
+  },
+  {
+   "nome": "dado-3",
+   "claro": "#1BAF7A",
+   "escuro": "#199E70",
+   "uso": "Série 3 de gráfico. Abaixo de 3:1 no claro: sempre com rótulo direto ou tabela. Mais de três séries: agrupe em \"Outros\"."
+  }
+ ],
+ "escala": {
+  "nome": "violeta",
+  "passos": [
+   {
+    "nome": "violeta-50",
+    "hex": "#F6F3FF"
+   },
+   {
+    "nome": "violeta-100",
+    "hex": "#ECE6FF"
+   },
+   {
+    "nome": "violeta-200",
+    "hex": "#D9CCFF"
+   },
+   {
+    "nome": "violeta-300",
+    "hex": "#B9A4FF"
+   },
+   {
+    "nome": "violeta-400",
+    "hex": "#9577F5"
+   },
+   {
+    "nome": "violeta-500",
+    "hex": "#734CEA"
+   },
+   {
+    "nome": "violeta-600",
+    "hex": "#5B2BE0"
+   },
+   {
+    "nome": "violeta-700",
+    "hex": "#4A1FC4"
+   },
+   {
+    "nome": "violeta-800",
+    "hex": "#3A1C9E"
+   },
+   {
+    "nome": "violeta-900",
+    "hex": "#24126B"
+   },
+   {
+    "nome": "violeta-950",
+    "hex": "#0B0620"
+   }
+  ]
+ },
+ "tipo": {
+  "families": {
+   "titulo": "Sora, system-ui, sans-serif",
+   "texto": "Manrope, system-ui, sans-serif"
+  },
+  "groups": [
+   {
+    "name": "Títulos",
+    "family": "titulo",
+    "styles": [
+     {
+      "name": "display",
+      "fontSize": "56px",
+      "lineHeight": "60px",
+      "fontWeight": 300,
+      "letterSpacing": "-0.035em",
+      "sample": "Finalmente, alguém que se importa.",
+      "usage": "Capa, topo de landing. Uma palavra em 600."
+     },
+     {
+      "name": "titulo-1",
+      "fontSize": "36px",
+      "lineHeight": "42px",
+      "fontWeight": 300,
+      "letterSpacing": "-0.03em",
+      "sample": "Bom dia, Samuel",
+      "usage": "Título de página. Uma palavra em 600."
+     },
+     {
+      "name": "titulo-2",
+      "fontSize": "26px",
+      "lineHeight": "32px",
+      "fontWeight": 300,
+      "letterSpacing": "-0.025em",
+      "sample": "Contratos do mês",
+      "usage": "Título de seção."
+     },
+     {
+      "name": "titulo-3",
+      "fontSize": "18px",
+      "lineHeight": "24px",
+      "fontWeight": 500,
+      "letterSpacing": "-0.015em",
+      "sample": "Escritório Almeida",
+      "usage": "Título de cartão, modal, painel."
+     },
+     {
+      "name": "numero",
+      "fontSize": "32px",
+      "lineHeight": "36px",
+      "fontWeight": 400,
+      "letterSpacing": "-0.03em",
+      "sample": "R$ 48.200",
+      "usage": "Número de indicador. Algarismos tabulares."
+     },
+     {
+      "name": "rotulo",
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": 500,
+      "letterSpacing": "0.08em",
+      "sample": "CLIENTES ATIVOS",
+      "usage": "Rótulo em caixa alta, cabeçalho de tabela, sobretítulo."
+     }
+    ]
+   },
+   {
+    "name": "Texto",
+    "family": "texto",
+    "styles": [
+     {
+      "name": "corpo",
+      "fontSize": "16px",
+      "lineHeight": "24px",
+      "fontWeight": 400,
+      "sample": "Escolhemos com você um único produto jurídico.",
+      "usage": "Texto corrido. Até 65 caracteres por linha."
+     },
+     {
+      "name": "corpo-sm",
+      "fontSize": "14px",
+      "lineHeight": "20px",
+      "fontWeight": 400,
+      "sample": "Última atualização há 3 minutos",
+      "usage": "Texto de interface, célula de tabela."
+     },
+     {
+      "name": "interface",
+      "fontSize": "14px",
+      "lineHeight": "20px",
+      "fontWeight": 600,
+      "sample": "Solicitar diagnóstico",
+      "usage": "Botão, item de menu, aba."
+     },
+     {
+      "name": "legenda",
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": 500,
+      "sample": "Criado em 26/09/2026",
+      "usage": "Metadado, ajuda de campo, etiqueta."
+     }
+    ]
+   }
+  ]
+ },
+ "tempo_assinatura": {
+  "valor": "1100ms",
+  "uso": "A dobra se fecha (carregamento e abertura)."
+ },
+ "curva": {
+  "valor": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+  "uso": "A curva da marca: sai rápido, chega devagar. Toda animação usa esta."
+ },
+ "simbolo": {
+  "viewBox": "0 0 100 100",
+  "pecas": [
+   "M8.67 78.00 A2.50 2.50 0 0 1 6.59 74.11 L50.52 8.23 A5.00 5.00 0 0 1 54.68 6.00 L77.75 6.00 A1.00 1.00 0 0 1 78.45 7.71 L64.45 21.71 A1.00 1.00 0 0 1 63.75 22.00 L61.64 22.00 A3.00 3.00 0 0 0 59.11 23.38 L24.74 76.85 A2.50 2.50 0 0 1 22.64 78.00 Z",
+   "M80.29 9.55 A1.00 1.00 0 0 1 82.00 10.25 L82.00 76.48 A23.52 23.52 0 0 1 58.48 100.00 L36.50 100.00 A2.50 2.50 0 0 1 34.00 97.50 L34.00 86.50 A2.50 2.50 0 0 1 36.50 84.00 L54.00 84.00 A12.00 12.00 0 0 0 66.00 72.00 L66.00 24.25 A1.00 1.00 0 0 1 66.29 23.55 Z"
+  ],
+  "pequeno": [
+   "M8.67 78.00 A2.50 2.50 0 0 1 6.59 74.11 L50.52 8.23 A5.00 5.00 0 0 1 54.68 6.00 L76.00 6.00 A6.00 6.00 0 0 1 82.00 12.00 L82.00 76.48 A23.52 23.52 0 0 1 58.48 100.00 L36.50 100.00 A2.50 2.50 0 0 1 34.00 97.50 L34.00 86.50 A2.50 2.50 0 0 1 36.50 84.00 L54.00 84.00 A12.00 12.00 0 0 0 66.00 72.00 L66.00 24.94 A2.94 2.94 0 0 0 63.06 22.00 L61.64 22.00 A3.00 3.00 0 0 0 59.11 23.38 L24.74 76.85 A2.50 2.50 0 0 1 22.64 78.00 Z"
+  ],
+  "entrada": [
+   [
+    -14,
+    -14
+   ],
+   [
+    14,
+    14
+   ]
+  ]
+ },
+ "logo": {
+  "assinatura_texto": "Anúncio Jurídico",
+  "peso": 400,
+  "tracking": -0.035,
+  "cores_simbolo": {
+   "primaria": "violeta",
+   "escuro": "noite",
+   "branco": "#FFFFFF",
+   "claro": "lavanda"
+  },
+  "combinacoes": {
+   "claro": [
+    "violeta",
+    "noite"
+   ],
+   "mono-escuro": [
+    "noite",
+    "noite"
+   ],
+   "escuro": [
+    "lavanda",
+    "nevoa"
+   ],
+   "branco": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ]
+  }
+ },
+ "publicacao": {
+  "skill": "design-anunciojuridico",
+  "destinos": [
+   "~/.claude/skills"
+  ],
+  "guarda": "entregas/marca-aj"
+ }
+}
